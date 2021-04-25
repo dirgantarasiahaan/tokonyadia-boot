@@ -28,9 +28,12 @@ Body :
     "address": "",
     "products": [
         {
-            "name": ",
+            "name": "",
             "description": "",
-            "image": ""
+            "image": "",
+            "stock": ,
+            "price":,
+            "createdAt": ""
         }
     ]
 }
@@ -62,7 +65,7 @@ Body :
     "createdAt": "",
     "products": [ 
         {
-	    "id": "",
+	        "id": "",
             "name": "",
             "description": "",
             "image": "",
@@ -91,7 +94,7 @@ Body :
     "description" : "",
     "image" : "",
     "stock" : ,
-    "price" : "",
+    "price" : ,
     "merchant_id" : 
 }
 
@@ -104,8 +107,8 @@ Body ;
     "description" : "",
     "image" : "",
     "stock" : ,
-    "price" : "",
-    "merchant_id" : 
+    "price" : ,
+    "merchant_id" : ""
 }
 
 ==============  Customer =============
