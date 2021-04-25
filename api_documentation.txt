@@ -1,3 +1,7 @@
+using ("") --> value as String
+not using ("") --> value as Integer/BigDecimal    
+
+
 ==============  Merchant =============
 - FindMerchantByID
 Get : IP:PORT/merchant/{id}
