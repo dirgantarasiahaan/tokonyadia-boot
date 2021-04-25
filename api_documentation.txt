@@ -36,8 +36,7 @@ Body :
             "description": "",
             "image": "",
             "stock": ,
-            "price":,
-            "createdAt": ""
+            "price": 
         }
     ]
 }
@@ -74,7 +73,7 @@ Body :
             "description": "",
             "image": "",
             "stock": ,
-            "price":,
+            "price": , 
             "createdAt": ""
         }
     ]
@@ -99,7 +98,7 @@ Body :
     "image" : "",
     "stock" : ,
     "price" : ,
-    "merchant_id" : 
+    "merchant_id" : ""
 }
 
 - Update Product
