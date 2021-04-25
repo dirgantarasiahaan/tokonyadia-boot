@@ -1,0 +1,170 @@
+==============  Merchant =============
+- FindMerchantByID
+Get : IP:PORT/merchant/{id}
+
+- FindMerchants
+GET : IP:PORT/merchants?page={page}&size={size}
+
+- CreateNewMerchant
+POST : IP:PORT/merchant
+If Only Merchant :
+Body : 
+{
+    "merchantName": "",
+    "ownerName": "",
+    "siupNumber": "",
+    "phoneNumber": "",
+    "address": "",
+    "products": []
+}
+
+MerchantWithProduct
+Body : 
+{
+    "merchantName": "",
+    "ownerName": "",
+    "siupNumber": "",
+    "phoneNumber": "",
+    "address": "",
+    "products": [
+        {
+            "name": ",
+            "description": "",
+            "image": ""
+        }
+    ]
+}
+
+- Update Merchant
+PUT : IP:PORT/merchant
+If Only Merchant :
+Body : 
+{
+    "id" : "",
+    "merchantName": "",
+    "ownerName": "",
+    "siupNumber": "",
+    "phoneNumber": "",
+    "address": "",
+    "createdAt": "",
+    "products": []
+}
+
+MerchantWithProduct
+Body : 
+{
+    "id": "",
+    "merchantName": ",
+    "ownerName": "",
+    "siupNumber": "",
+    "phoneNumber": "",
+    "address": "",
+    "createdAt": "",
+    "products": [ 
+        {
+	    "id": "",
+            "name": "",
+            "description": "",
+            "image": "",
+            "stock": ,
+            "price":,
+            "createdAt": ""
+        }
+    ]
+}
+
+==============  Product =============
+- FindProductsByMerchantId
+Get : IP:PORT/merchant/{id}/products
+
+- FindProductById
+Get : IP:PORT/product/{id}
+
+- FindProducts
+GET : IP:PORT/products?page={page}&size={size}
+
+- CreateNewProduct
+POST : IP:PORT/product
+Body : 
+{
+    "name" : "",
+    "description" : "",
+    "image" : "",
+    "stock" : ,
+    "price" : "",
+    "merchant_id" : 
+}
+
+- Update Product
+PUT : IP:PORT/product
+Body ; 
+{
+    "id" : "",
+    "name" : "",
+    "description" : "",
+    "image" : "",
+    "stock" : ,
+    "price" : "",
+    "merchant_id" : 
+}
+
+==============  Customer =============
+- FindCustomerById
+Get : IP:PORT/customer/{id}
+
+- FindCustomers
+GET : IP:PORT/customers?page={page}&size={size}
+
+- CreateNewCustomer
+POST : IP:PORT/customer
+Body : 
+{
+    "firstName" : "",
+    "lastName" : "",
+    "birthDate" : "",
+    "address" : "",
+    "username" : "",
+    "password" : "",
+    "status" : ,
+    "email" : ""
+}
+
+- Update Customer
+PUT : IP:PORT/customer
+Body ; 
+{
+    "id" : "",
+    "firstName" : "",
+    "lastName" : "",
+    "birthDate" : "",
+    "address" : "",
+    "username" : "",
+    "password" : "",
+    "status" : ,
+    "email" : "",
+    "createdAt" : "" 
+}
+
+==============  Purchase =============
+- FindPurchaseById
+Get : IP:PORT/purchase/{id}
+
+- FindPurchases
+GET : IP:PORT/purchases?page={page}&size={size}
+
+- CreateNewPurchase
+POST : IP:PORT/purchase
+Body : 
+{
+    "customerId": "",
+    "purchaseDetails": [
+        {
+            "quantity": ,
+            "productId": ""
+        },
+        {
+            "quantity": ,
+            "productId": ""
+        }
+    ]
+}
