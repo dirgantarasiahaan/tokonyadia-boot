@@ -8,3 +8,7 @@ Fitur Tokonyadia ;
 - Pemilik Toko dapat mendaftar product - product tokonya
 - Customer dapat mendaftar di Tokonyadia
 - Customer dapat melakukan transaksi pembelian dan mengurangi stock
+
+Cara Run project :
+- Import tokonyadia.sql
+- Untuk hit API --> gunakan api_documentation.txt 
