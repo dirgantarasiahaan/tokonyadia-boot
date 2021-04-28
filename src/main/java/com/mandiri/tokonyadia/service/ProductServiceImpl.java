@@ -23,6 +23,9 @@ public class ProductServiceImpl implements ProductService{
     ProductRepository productRepository;
 
     @Autowired
+    ProductService productService;
+
+    @Autowired
     MerchantService merchantService;
 
     @Override
@@ -56,6 +59,16 @@ public class ProductServiceImpl implements ProductService{
         return merchant.getProducts();
     }
 
+    @Override
+    public Product updateStock(String productId, Integer quantity) {
+        Product product = productService.findProductById(productId);
+        if (quantity > product.getStock()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Quantity Order > stock");
+        }
+        product.setUpdatedAt(new Timestamp(new Date().getTime()));
+        product.setStock(product.getStock()-quantity);
+        return productRepository.save(product);
+    }
 
     private void validateProduct(String productId) {
         if (!productRepository.findById(productId).isPresent()){

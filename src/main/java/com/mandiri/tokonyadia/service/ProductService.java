@@ -13,4 +13,5 @@ public interface ProductService {
     public Product createNewProduct(Product product);
     public Product updateProduct(Product product);
     public List<Product> findALlProductByMerchantId(String merchantId);
+    public Product updateStock(String productId, Integer quantity);
 }

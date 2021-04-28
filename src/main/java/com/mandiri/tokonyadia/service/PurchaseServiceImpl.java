@@ -54,10 +54,20 @@ public class PurchaseServiceImpl implements PurchaseService{
         System.out.println("ID : " + purchaseDetail.getId());
         Customer customer = customerService.findCustomertById(customerId);
         purchase.setCustomer(customer);
-        BigDecimal amount = updateStockAndGetAmount(purchaseDetail);
 
+        BigDecimal amount = new BigDecimal(0.0);
+        Product product = new Product();
+        Product updateProduct = new Product();
+
+        for (PurchaseDetail purchaseDetails: purchaseDetail.getPurchaseDetails()) {
+            product = productService.updateStock(purchaseDetails.getProduct().getId(), purchaseDetails.getQuantity());
+            purchaseDetails.setPurchase(purchaseDetail);
+            purchaseDetails.setProduct(product);
+            purchaseDetails.setSub_total(BigDecimal.valueOf(purchaseDetails.getQuantity()).multiply(product.getPrice()));
+            updateProduct = productService.updateProduct(product);
+            amount = amount.add(product.getPrice().multiply(new BigDecimal(purchaseDetails.getQuantity())));
+        }
         walletRestService.debitWallet(customer.getPhoneNumber(), amount);
-
         return purchaseDetail;
     }
 
@@ -72,25 +82,25 @@ public class PurchaseServiceImpl implements PurchaseService{
         }
     }
 
-    private BigDecimal updateStockAndGetAmount(Purchase purchaseDetail) {
-        BigDecimal amount = new BigDecimal(0.0);
-        Product product = new Product();
-        Product updateProduct = new Product();
-
-        for (PurchaseDetail purchaseDetails: purchaseDetail.getPurchaseDetails()) {
-            product = productService.findProductById(purchaseDetails.getProduct().getId());
-
-            if (purchaseDetails.getQuantity() > product.getStock()){
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Quantity Order > stock");
-            }
-            purchaseDetails.setPurchase(purchaseDetail);
-            purchaseDetails.setProduct(product);
-            product.setStock(product.getStock() - purchaseDetails.getQuantity());
-            product.setUpdatedAt(new Timestamp(new Date().getTime()));
-            purchaseDetails.setSub_total(BigDecimal.valueOf(purchaseDetails.getQuantity()).multiply(product.getPrice()));
-            updateProduct = productService.updateProduct(product);
-            amount = amount.add(product.getPrice().multiply(new BigDecimal(purchaseDetails.getQuantity())));
-        }
-        return amount;
-    }
+//    private BigDecimal updateStockAndGetAmount(Purchase purchaseDetail) {
+//        BigDecimal amount = new BigDecimal(0.0);
+//        Product product = new Product();
+//        Product updateProduct = new Product();
+//
+//        for (PurchaseDetail purchaseDetails: purchaseDetail.getPurchaseDetails()) {
+//            product = productService.findProductById(purchaseDetails.getProduct().getId());
+//
+//            if (purchaseDetails.getQuantity() > product.getStock()){
+//                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Quantity Order > stock");
+//            }
+//            purchaseDetails.setPurchase(purchaseDetail);
+//            purchaseDetails.setProduct(product);
+//            product.setStock(product.getStock() - purchaseDetails.getQuantity());
+//            product.setUpdatedAt(new Timestamp(new Date().getTime()));
+//            purchaseDetails.setSub_total(BigDecimal.valueOf(purchaseDetails.getQuantity()).multiply(product.getPrice()));
+//            updateProduct = productService.updateProduct(product);
+//            amount = amount.add(product.getPrice().multiply(new BigDecimal(purchaseDetails.getQuantity())));
+//        }
+//        return amount;
+//    }
 }
