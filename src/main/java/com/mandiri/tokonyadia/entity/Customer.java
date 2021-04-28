@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -26,22 +25,27 @@ public class Customer {
     private String password;
     private Integer status;
     private String email;
+    private String phoneNumber;
     private Timestamp createdAt;
     private Timestamp updatedAt;
+
 
     public Customer() {
     }
 
-    public Customer(Customer customer) {
-        this.firstName = customer.getFirstName();
-        this.lastName = customer.getLastName();
-        this.birthDate = customer.getBirthDate();
-        this.address = customer.getAddress();
-        this.username = customer.getUsername();
-        this.password = customer.getPassword();
-        this.status = customer.getStatus();
-        this.email = customer.getEmail();
-        this.updatedAt = customer.getUpdatedAt();
+    public Customer(String id, String firstName, String lastName, Date birthDate, String address, String username, String password, Integer status, String email, String phoneNumber, Timestamp createdAt, Timestamp updatedAt) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.username = username;
+        this.password = password;
+        this.status = status;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -130,5 +134,13 @@ public class Customer {
 
     public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

@@ -23,31 +23,6 @@ public class Product {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    //    @ManyToOne(targetEntity = Merchant.class, cascade = CascadeType.ALL)
-//    @JoinColumn(name = "merchant_id")
-//    @JsonIgnoreProperties({"products"})
-//    private Merchant merchant;
-//
-//    public Merchant getMerchant() {
-//        return merchant;
-//    }
-//
-//    public void setMerchant(Merchant merchant) {
-//        this.merchant = merchant;
-//    }
-    //    @JsonIgnoreProperties({"products"})
-//    private Merchant merchant;
-
-//    private  String merchantId;
-
-//    public String getMerchantId() {
-//        return merchantId;
-//    }
-//
-//    public void setMerchantId(String merchantId) {
-//        this.merchantId = merchantId;
-//    }
-
 
     public String getId() {
         return id;

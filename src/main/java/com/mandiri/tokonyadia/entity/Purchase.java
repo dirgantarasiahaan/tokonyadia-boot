@@ -1,11 +1,10 @@
 package com.mandiri.tokonyadia.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "t_purchase")
@@ -18,11 +17,18 @@ public class Purchase {
 
     private Date purchaseDate;
 
-    private String customerId;
+    @ManyToOne()
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    @OneToMany(targetEntity = PurchaseDetail.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "purchase_id")
+//    @OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
+////    @JoinColumn(name = "purchase_id")
+//    private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
+
+    @OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
+    @JsonIgnoreProperties("purchase")
     private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
+
 
     public String getId() {
         return id;
@@ -40,12 +46,12 @@ public class Purchase {
         this.purchaseDate = purchaseDate;
     }
 
-    public String getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public List<PurchaseDetail> getPurchaseDetails() {

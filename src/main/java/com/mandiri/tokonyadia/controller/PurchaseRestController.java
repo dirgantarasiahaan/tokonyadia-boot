@@ -28,9 +28,10 @@ public class PurchaseRestController {
         return purchaseService.findAllPurchase(pageable);
     }
 
-    @PostMapping("purchase")
-    public Purchase createNewPurchase(@RequestBody Purchase purchase){
+    @PostMapping("customer/{id}/purchases")
+    public Purchase createNewPurchase(@PathVariable(name = "id") String customerId,
+                                      @RequestBody Purchase purchase){
         purchase.setPurchaseDate(new Date());
-        return purchaseService.createNewPurchase(purchase);
+        return purchaseService.createNewPurchase(purchase, customerId);
     }
 }

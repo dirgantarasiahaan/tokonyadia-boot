@@ -10,5 +10,5 @@ public interface PurchaseService {
 
     public Purchase findPurchaseById(String purchaseId);
     public Page<Purchase> findAllPurchase(Pageable pageable);
-    public Purchase createNewPurchase(Purchase purchase);
+    public Purchase createNewPurchase(Purchase purchase, String customerId);
 }

@@ -2,10 +2,7 @@ package com.mandiri.tokonyadia.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -18,7 +15,15 @@ public class PurchaseDetail {
     private String id;
     private Integer quantity;
     private BigDecimal sub_total;
-    private String productId;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
+
 
     public String getId() {
         return id;
@@ -36,12 +41,12 @@ public class PurchaseDetail {
         this.quantity = quantity;
     }
 
-    public String getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public BigDecimal getSub_total() {
@@ -50,5 +55,13 @@ public class PurchaseDetail {
 
     public void setSub_total(BigDecimal sub_total) {
         this.sub_total = sub_total;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
     }
 }
