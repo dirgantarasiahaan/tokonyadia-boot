@@ -34,7 +34,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     ProductService productService;
 
     @Autowired
-    RestTemplate restTemplate;
+    WalletRestService walletRestService;
 
     @Override
     public Purchase findPurchaseById(String purchaseId) {
@@ -56,15 +56,15 @@ public class PurchaseServiceImpl implements PurchaseService{
         purchase.setCustomer(customer);
         BigDecimal amount = updateStockAndGetAmount(purchaseDetail);
 
-        String url = "http://localhost:8081/debit";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("phoneNumber", customer.getPhoneNumber())
-                .queryParam("amount", amount);
-
-        restTemplate.exchange(builder.toUriString(), HttpMethod.POST, null, String.class);
+        walletRestService.debitWallet(customer.getPhoneNumber(), amount);
 
         return purchaseDetail;
     }
+
+
+
+
+
 
     private void validatePurchase(String purchaseId) {
         if (!purchaseRepository.findById(purchaseId).isPresent()){
