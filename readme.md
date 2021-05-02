@@ -5,10 +5,11 @@ Additional features :
 - Get All Costumer & total payment by merchant id
 
 How to Run this Project :
-- Clone Project and run project
+- Clone and run project
     - challenge-tokonyadia-boot [branch : email-feature]
     - tokonyadia-boot-consumer [branch : master]
     - [handson] opo-cash [branch : master]
+
 
 - run zookepeer, server and create topics
     - cd [kafka-folder]
