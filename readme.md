@@ -4,8 +4,6 @@ Additional features :
 - Send Email
 - Get All Costumer & total payment by merchant id
 
-API Documentation : api_documentation.txt
-
 How to Run this Project :
 - Clone Project and run project
     - challenge-tokonyadia-boot [branch : email-feature]
