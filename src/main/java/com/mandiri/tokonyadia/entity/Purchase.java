@@ -1,5 +1,6 @@
 package com.mandiri.tokonyadia.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,10 +21,6 @@ public class Purchase {
     @ManyToOne()
     @JoinColumn(name = "customer_id")
     private Customer customer;
-
-//    @OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
-////    @JoinColumn(name = "purchase_id")
-//    private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
 
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.PERSIST)
     @JsonIgnoreProperties("purchase")

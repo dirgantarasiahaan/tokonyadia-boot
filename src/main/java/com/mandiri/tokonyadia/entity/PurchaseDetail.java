@@ -1,5 +1,7 @@
 package com.mandiri.tokonyadia.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,10 +16,11 @@ public class PurchaseDetail {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
     private Integer quantity;
-    private BigDecimal sub_total;
+    private BigDecimal subTotal;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnoreProperties("purchaseDetails")
     private Product product;
 
     @ManyToOne
@@ -49,12 +52,12 @@ public class PurchaseDetail {
         this.product = product;
     }
 
-    public BigDecimal getSub_total() {
-        return sub_total;
+    public BigDecimal getSubTotal() {
+        return subTotal;
     }
 
-    public void setSub_total(BigDecimal sub_total) {
-        this.sub_total = sub_total;
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
     }
 
     public Purchase getPurchase() {

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,7 @@ public class Merchant {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    @OneToMany(targetEntity = Product.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "merchant_id")
+    @OneToMany(mappedBy = "merchant", cascade = CascadeType.PERSIST)
     private List<Product> products = new ArrayList<>();
 
     public String getId() {
@@ -99,5 +99,7 @@ public class Merchant {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+
 }
 

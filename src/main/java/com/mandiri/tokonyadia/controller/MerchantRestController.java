@@ -1,8 +1,8 @@
 package com.mandiri.tokonyadia.controller;
 
 
+import com.mandiri.tokonyadia.dto.MerchantCustomerDto;
 import com.mandiri.tokonyadia.entity.Merchant;
-import com.mandiri.tokonyadia.repository.MerchantRepository;
 import com.mandiri.tokonyadia.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,6 +38,11 @@ public class MerchantRestController {
     @PutMapping("/merchant")
     public Merchant updateMerchant(@RequestBody Merchant merchant){
         return merchantService.updateMerchant(merchant);
+    }
+
+    @GetMapping("merchant/{id}/customers")
+    public List<MerchantCustomerDto> getCustomersByMerchantId(@PathVariable(name = "id") String id){
+        return merchantService.getCustomersByMerchantId(id);
     }
 
 }

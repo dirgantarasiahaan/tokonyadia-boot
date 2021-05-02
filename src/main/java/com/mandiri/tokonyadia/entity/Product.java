@@ -1,11 +1,14 @@
 package com.mandiri.tokonyadia.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "m_product")
@@ -23,6 +26,30 @@ public class Product {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "merchant_id")
+    @JsonIgnoreProperties("products")
+    private Merchant merchant;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
+    @JsonIgnoreProperties("product")
+    private List<PurchaseDetail> purchaseDetails = new ArrayList<>();
+
+    public Merchant getMerchant() {
+        return merchant;
+    }
+
+    public void setMerchant(Merchant merchant) {
+        this.merchant = merchant;
+    }
+
+    public List<PurchaseDetail> getPurchaseDetails() {
+        return purchaseDetails;
+    }
+
+    public void setPurchaseDetails(List<PurchaseDetail> purchaseDetails) {
+        this.purchaseDetails = purchaseDetails;
+    }
 
     public String getId() {
         return id;

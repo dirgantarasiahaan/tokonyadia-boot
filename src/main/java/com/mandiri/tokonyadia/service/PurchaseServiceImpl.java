@@ -1,5 +1,8 @@
 package com.mandiri.tokonyadia.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mandiri.tokonyadia.dto.PurchaseDto;
 import com.mandiri.tokonyadia.entity.Customer;
 import com.mandiri.tokonyadia.entity.Product;
 import com.mandiri.tokonyadia.entity.Purchase;
@@ -10,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,6 +40,14 @@ public class PurchaseServiceImpl implements PurchaseService{
     @Autowired
     WalletRestService walletRestService;
 
+    @Autowired
+    ObjectMapper objectMapper;
+
+    @Autowired
+    KafkaTemplate kafkaTemplate;
+
+
+
     @Override
     public Purchase findPurchaseById(String purchaseId) {
         validatePurchase(purchaseId);
@@ -48,7 +60,7 @@ public class PurchaseServiceImpl implements PurchaseService{
     }
 
     @Override
-    public Purchase createNewPurchase(Purchase purchase, String customerId) {
+    public Purchase createNewPurchase(Purchase purchase, String customerId) throws JsonProcessingException {
         purchase.setPurchaseDate(new Timestamp(new Date().getTime()));
 
         Purchase purchaseDetail =  purchaseRepository.save(purchase);
@@ -56,17 +68,23 @@ public class PurchaseServiceImpl implements PurchaseService{
         purchase.setCustomer(customer);
 
         BigDecimal amount = new BigDecimal(0.0);
-
         for (PurchaseDetail purchaseDetails: purchaseDetail.getPurchaseDetails()) {
-            Product product = productService.updateStock(purchaseDetails.getProduct().getId(), purchaseDetails.getQuantity());
             purchaseDetails.setPurchase(purchaseDetail);
+
+            Product product = productService.updateStock(purchaseDetails.getProduct().getId(), purchaseDetails.getQuantity());
             purchaseDetails.setProduct(product);
-            purchaseDetails.setSub_total(BigDecimal.valueOf(purchaseDetails.getQuantity()).multiply(product.getPrice()));
+            purchaseDetails.setSubTotal(BigDecimal.valueOf(purchaseDetails.getQuantity()).multiply(product.getPrice()));
+
             productService.updateProduct(product);
             amount = amount.add(product.getPrice().multiply(new BigDecimal(purchaseDetails.getQuantity())));
         }
 
+        PurchaseDto purchaseDto = new PurchaseDto(customer.getEmail(), customer.getUsername(), amount);
+
         walletRestService.debitWallet(customer.getPhoneNumber(), amount);
+
+        String jsonPurchase = objectMapper.writeValueAsString(purchaseDto);
+        kafkaTemplate.send("simple-notification", jsonPurchase);
 
         return purchaseDetail;
     }
