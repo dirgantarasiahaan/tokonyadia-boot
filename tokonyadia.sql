@@ -1,5 +1,5 @@
 /*
- Navicat Premium Data Transfer
+ Navicat PostgreSQL Data Transfer
 
  Source Server         : mandiri-academy
  Source Server Type    : PostgreSQL
@@ -12,7 +12,7 @@
  Target Server Version : 130002
  File Encoding         : 65001
 
- Date: 28/04/2021 22:45:47
+ Date: 02/05/2021 21:15:53
 */
 
 
